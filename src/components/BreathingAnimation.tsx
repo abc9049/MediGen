@@ -104,30 +104,32 @@ export default function BreathingAnimation({ isActive }: BreathingAnimationProps
         >
           {isActive ? "Breathe with the circle" : "Press play to begin"}
         </motion.p>
-        
-        {isActive && (
-          <motion.div
-            className="flex justify-center space-x-4 mt-2 text-xs text-slate-400"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 2 }}
-          >
-            <motion.span
-              animate={{ opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 3, repeat: Infinity }}
-            >
-              Inhale
-            </motion.span>
-            <span>•</span>
-            <motion.span
-              animate={{ opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 3, repeat: Infinity, delay: 1.5 }}
-            >
-              Exhale
-            </motion.span>
-          </motion.div>
-        )}
       </motion.div>
+
+      {/* Inhale/Exhale Instructions - 80px below the circle */}
+      {isActive && (
+        <motion.div
+          className="absolute flex justify-center space-x-4 text-xs text-slate-400"
+          style={{ top: '204px' }} // 124px (circle radius) + 80px
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2 }}
+        >
+          <motion.span
+            animate={{ opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 3, repeat: Infinity }}
+          >
+            Inhale
+          </motion.span>
+          <span>•</span>
+          <motion.span
+            animate={{ opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 3, repeat: Infinity, delay: 1.5 }}
+          >
+            Exhale
+          </motion.span>
+        </motion.div>
+      )}
 
       {/* Particle Effects */}
       {isActive && (

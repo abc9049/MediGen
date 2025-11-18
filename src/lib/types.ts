@@ -6,6 +6,7 @@ export interface MeditationInput {
   desiredOutcome: string;
   visualizationTheme: string;
   duration?: number; // minutes, default 10
+  voicePreference?: string; // voice type preference
 }
 
 export interface MeditationScript {

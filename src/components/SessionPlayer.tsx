@@ -422,7 +422,7 @@ export default function SessionPlayer({ script, onComplete, onBackToQuestionnair
           <span>New Meditation</span>
         </button>
         
-        <h1 className="text-xl font-medium text-white">
+        <h1 className="text-2xl md:text-3xl font-bold text-white text-center absolute left-1/2 transform -translate-x-1/2">
           {script.title}
         </h1>
         
@@ -435,9 +435,23 @@ export default function SessionPlayer({ script, onComplete, onBackToQuestionnair
         </button>
       </header>
 
+      {/* Session Instruction Text - Below Title */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-center mb-8 px-6"
+      >
+        <p className="text-lg text-slate-300 max-w-md mx-auto leading-relaxed">
+          {sessionState.showBreathingAnimation ? 
+            "Breathe deeply and let your body relax" : 
+            "Continue to rest in this peaceful state"
+          }
+        </p>
+      </motion.div>
+
       {/* Main Content */}
-      <div className="flex-1 flex flex-col items-center justify-start pt-12 pb-24 px-6">
-        {/* Breathing Animation - Moved up 100px from center */}
+      <div className="flex-1 flex flex-col items-center justify-start pt-4 pb-24 px-6">
+        {/* Breathing Animation */}
         <AnimatePresence>
           {sessionState.showBreathingAnimation && (
             <motion.div
@@ -445,26 +459,19 @@ export default function SessionPlayer({ script, onComplete, onBackToQuestionnair
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
               className="mb-16"
-              style={{ marginTop: '-100px' }}
+              style={{ marginTop: '20px' }}
             >
               <BreathingAnimation isActive={sessionState.isPlaying && !sessionState.isPaused} />
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* Session Info */}
+        {/* Timer Info */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center space-y-6 mb-12"
+          className="text-center mb-12"
         >
-          <p className="text-lg text-slate-300 max-w-md mx-auto leading-relaxed">
-            {sessionState.showBreathingAnimation ? 
-              "Breathe deeply and let your body relax" : 
-              "Continue to rest in this peaceful state"
-            }
-          </p>
-          
           <div className="text-slate-400 text-sm">
             {formatTime(sessionState.currentTime)} / {formatTime(sessionState.totalDuration)}
           </div>
@@ -486,43 +493,6 @@ export default function SessionPlayer({ script, onComplete, onBackToQuestionnair
               <Play size={32} className="text-white ml-1" />
             )}
           </motion.button>
-          
-          {/* Temporary TTS Test Button */}
-          <div className="flex flex-col items-center space-y-2">
-            <div className="flex space-x-2">
-              <button
-                onClick={testTTS}
-                className="px-4 py-2 bg-yellow-500/80 text-black rounded-lg text-sm hover:bg-yellow-400/80 transition-colors"
-              >
-                Test Voice
-              </button>
-              <button
-                onClick={() => {
-                  // Test system audio with beep
-                  const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-                  const oscillator = audioContext.createOscillator();
-                  const gainNode = audioContext.createGain();
-                  
-                  oscillator.connect(gainNode);
-                  gainNode.connect(audioContext.destination);
-                  
-                  oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
-                  gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-                  
-                  oscillator.start();
-                  oscillator.stop(audioContext.currentTime + 0.2);
-                  
-                  alert('Did you hear a beep? If not, check your device volume.');
-                }}
-                className="px-4 py-2 bg-blue-500/80 text-white rounded-lg text-sm hover:bg-blue-400/80 transition-colors"
-              >
-                Test Audio
-              </button>
-            </div>
-            <p className="text-xs text-slate-400 text-center max-w-xs">
-              Test both voice and system audio to troubleshoot
-            </p>
-          </div>
         </div>
       </div>
 
