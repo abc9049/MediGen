@@ -56,8 +56,8 @@ export default function MediGenApp() {
         {/* Header */}
         {currentView !== 'session' && (
           <header className="text-center mb-8">
-            <h1 className="text-4xl md:text-6xl font-light text-slate-100 mb-4">
-              Medi<span className="text-purple-400">Gen</span>
+            <h1 className="text-4xl md:text-6xl font-bold text-slate-100 mb-4">
+              Meditation Generator
             </h1>
             <p className="text-lg text-slate-300 max-w-md mx-auto">
               Personalized guided meditations tailored to your inner world
